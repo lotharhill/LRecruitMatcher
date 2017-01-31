@@ -1,0 +1,42 @@
+{% extends 'matcher/base.html' %}
+
+
+{% block body %}
+{% block title %} Company List {% endblock %}
+
+<table class="table">
+<tr>
+    <td>Company Name</td>
+    <td>main_number</td>
+    <td>address</td>
+    <td>zip_code</td>
+    <td width="1500">DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDescription</td>
+    <td>industry</td>
+    <td>size</td>
+    <td>website</td>
+    <td>linkedin_profile</td>
+    <td>created</td>
+    <td>last_updated</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.main_number }}</td>
+    <td>{{ object.address }}</td>
+    <td>{{ object.zip_code }}</td>
+    <td>{{ object.description|truncatewords:25 }}</td>
+    <td>{{ object.industry }}</td>
+    <td>{{ object.size }}</td>
+    <td><a href="{{ object.website }}">{{ object.website }}</a></td>
+    <td><a href="{{ object.linkedin_profile }}">{{ object.linkedin_profile }}</a></td>
+    <td>{{ object.created }}</td>
+    <td>{{ object.last_updated }}</td>
+</tr>
+{% endfor %}
+   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
+{% endblock %}

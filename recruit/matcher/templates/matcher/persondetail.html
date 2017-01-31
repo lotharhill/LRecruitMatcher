@@ -1,0 +1,114 @@
+{% extends 'matcher/base.html' %}
+
+
+{% block body %}
+{% block title %} Person Detail {% endblock %}
+
+<h2>
+	{% if person.prefix%} {{person.get_prefix_display }} {% endif%} 
+	{{ person.first_name }} 
+	{% if person.nickname %} "{{person.nickname}}" {% endif %}
+	{{ person.middle_name }}
+	{{ person.last_name }} 
+	{% if person.suffix%} {{person.suffix}} {% endif%} 
+</h2>
+<a href="{% url 'matcher:person_update' person.id %}">Edit Person</a>
+	<h3>{{ person.title }} at 
+		<a href="{% url 'matcher:companydetail' person.current_employer.id %}">
+		{{ person.current_employer.company_name }}
+		</a>
+	</h3>
+
+<table>
+	<tr>
+		<td> Salary: </td>
+		<td> {{ person.salary }} </td>
+	</tr>
+    <tr>
+		<td> Phone: </td><!--  this will be a list when phone/contact is in its own table -->
+		<td>  {{person.phone}}</td>
+	</tr>
+    <tr>
+		<td> Email: </td>
+		<td> {{ person.email }} </td>
+	</tr>
+    <tr>
+		<td> LinkedIn Profile: </td>
+		<td> {{ person.linkedin_profile }} </td>
+	</tr>
+    <tr>
+		<td> Current Employer: </td> <!--  this will be a list when employment history is in its own table -->
+		<td> {{ person.current_employer }} </td>
+	</tr>
+    <tr>
+		<td> Date File Created: </td>
+		<td> {{ person.created }} </td>
+	</tr>
+    <tr>
+		<td> Last Updated: </td>
+		<td> {{person.last_updated}} </td>
+	</tr>
+</table>
+
+<br>
+
+
+
+<div class="card-deck">
+	<div class="col col-md-6">
+		<h4>{{ person.first_name }} 
+			{% if person.nickname %} "{{person.nickname}}" {% endif %}
+			{{ person.middle_name }}
+			{{ person.last_name }}  Candidate Matches
+		</h4>
+				<div class="col col-md-5">
+				     <div class="card text-center">
+				        <div class="card-block">
+				        	{% if person.match_set.all %}
+								<ul class="list-group list-group-flush text-center">
+								{% for match in person.match_set.all %}
+								    <a href="{% url 'matcher:positiondetail' match.position.id %}" class="list-group-item  list-group-item-action">
+								    	{{ match.position.job_title}} reporting to {{match.position.contact_name }} issued on {{ match.position.created }}
+								    	<br>
+								    	{{ match.get_stage_in_process_display }}
+								    </a>
+								{% endfor %}
+							{% else %}
+							<div class="bg-faded text-muted">No Matches for this candidate</div>
+							{% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+	</div>
+	<div class="col col-md-6">
+		<h4>Positions Reporting to	{{ person.first_name }} 
+			{% if person.nickname %} "{{person.nickname}}" {% endif %}
+			{{ person.middle_name }}
+			{{ person.last_name }} 
+			{% if person.suffix%} {{person.suffix}} {% endif%} 
+		</h4>
+				<div class="col col-md-5">
+				     <div class="card text-center">
+				        <div class="card-block">
+				        {% if person.position_set.all %}
+							<ul class="list-group list-group-flush text-center">
+
+							{% for position in person.position_set.all %}
+							    <a href="{% url 'matcher:positiondetail' position.id %}" class="list-group-item  list-group-item-action">
+							    	{{ position.job_title}} reporting to {{position.contact_name }} at {{ position.created }}<br>
+							    	has had {{position.get_match_count }} matches and has had 
+							    	{{ position.get_interview_count }} interviews
+							    </a>
+							{% endfor %}
+							{% else %}
+							<div class="bg-faded text-muted">No Job Orders reporting to this Person</div>
+							{% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+	</div>
+</div>
+
+{% endblock %}

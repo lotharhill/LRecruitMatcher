@@ -1,0 +1,72 @@
+{% extends 'matcher/base.html' %}
+
+{% block body %}
+{% block title %} Match Detail {% endblock %}
+
+<h2>
+	<a href="{% url 'matcher:persondetail' match.candidate.id %}">
+{{ match.candidate.first_name }} {{ match.candidate.last_name }} </a> for the position of  
+	<a href="{% url 'matcher:positiondetail' match.position.id %}">
+{{ match.position.job_title }}</a>
+ at 
+ 	</a> at 
+	<a href="{% url 'matcher:companydetail' match.position.company.id %}">
+{{ match.position.company }}
+	</a>
+</h2>
+<a href="{% url 'matcher:match_update' match.id %}">Edit Match</a>
+<table>
+	<tr>	<td>Stage in Process: 
+			</td>
+			<td>{{ match.get_stage_in_process_display }} 
+			</td>
+	</tr>
+	<tr>	<td> Notes
+			</td>
+			<td>{{ match.notes }}_______editable field....so should this whole thing be a form?
+			</td>
+	</tr>
+	<tr>	<td> Active Search?
+			</td>
+			<td>
+				{% if match.is_active %}
+					This match is fucking active
+					{% else %}
+					This shit be dead, yo!
+				{% endif %}
+			</td>
+	</tr>
+	<tr>	<td> Created Date:
+			</td>
+			<td>{{ match.created }}
+			</td>
+	</tr>
+	<tr>	<td>Last Updated:
+			</td>
+			<td>{{ match.last_updated }}  
+			</td>
+	</tr>
+</table>
+<br>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h4>Interview History</h4></div>
+
+{% for interview in match.interview_set.all %}
+  <!-- List group -->
+  <ul class="list-group">
+    <li class="list-group-item"><span>
+<a href="{% url 'matcher:persondetail' interview.match.candidate.id %}">
+    	{{ interview.match.candidate.first_name }} {{ interview.match.candidate.last_name }}</a>
+    	{% if interview.match.stage_in_process %} is in the 
+    	<a href="{% url 'matcher:interviewdetail' interview.id %}">
+    	{{ interview.match.stage_in_process }} stage
+    	{% endif %}
+    	Interview at {{ interview.scheduled_time }}</a> with {% for hm in interview.interview_with.all %}{% if forloop.first %}{% else %}{% if forloop.last %}, and {% else %}, {% endif %}{% endif %}<a href="{% url 'matcher:persondetail' hm.id %}">{{ hm.first_name }} {{ hm.last_name}}</a>{% endfor %}
+</span>
+    </li>
+
+  </ul>    {% endfor %}
+</div>
+
+{% endblock %}

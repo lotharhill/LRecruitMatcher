@@ -1,0 +1,85 @@
+{% extends 'matcher/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+{% block title %} Company Detail {% endblock %}
+
+<div class="list-group-item active">
+	<h3>{{ company.company_name }}</h3>
+</div>
+<a href="{% url 'matcher:company_update' company.id %}">Edit Company</a>
+<div class="container">
+	<div class="row">
+		 
+			
+				<div class="company-description">
+				                <h4 class="list-group-item-heading">Company Description:</h4>
+				                <p class="list-group-item-text">{{ company.description }}</p>
+				</div>
+	</div>
+	<div class="row">
+				<div class="col-3 corporate-phone">
+				                <h4>Corporate Phone:	</h4>
+				                <p>{{ company.main_number }}</p>
+				</div>
+				<div class="col-3 company-address">
+				                <h4>Company Address:</h4>
+				                <p>{{ company.address }}</p>
+				                 <!-- https://www.google.com/maps/place/ then take the address and strip out white space and replace with a plus sign 333+Continental+Blvd,+El+Segundo,+CA+90245 -->
+				</div>
+				<div class="col-2 zip-code">
+				                <h4>Zip Code:</h4>
+				                <p>{{ company.zip_code }}</p>
+				</div>
+
+				<div class="col-2 industry">
+				                <h4>Insustry:	</h4>
+				                <p>{{ company.industry }}</p>
+				</div>
+				<div class="col-2 company-size">
+				                <h4>Company Size:	</h4>
+				                <p>{{ company.size }}</p>
+				</div>
+				<div class="col-4 company-website">
+				                <h4>Company Website:</h4>
+				                <p><a href={{ company.website }}>    {{ company.website }} </a></p>
+				</div>
+				<div class="col-4 linkedin-profile">
+				                <h4>LinkedIn Profile:	</h4>
+				                <p><a href={{ company.linkedin_profile }}> {{ company.linkedin_profile }} </a></p>
+				</div>
+				<div class="col-2 founded">
+				                <h4>Created:	</h4>
+				                <p>{{ company.created }}</p>
+				</div>
+				<div class="col-2 founded">
+				                <h4>Last updated: </h4>
+				                <p>{{ company.last_updated }}</p>
+				</div>
+
+		 
+	</div>
+</div>
+<div class="list-group">
+	<a href="#" class="list-group-item active">
+<h3>Employees at {{ company.company_name }}</h3>
+	</a>
+{% for person in company.person_set.all %}
+    	<a href="{% url 'matcher:persondetail' person.id %}" class="list-group-item">
+	    	{{ person.first_name}} {{person.last_name }}
+	    </a>
+    
+
+{% endfor %}
+</div>
+<div class="list-group">
+  	<a href="#" class="list-group-item active">
+		<h3>Job Order History at {{ company.company_name }}</h3>
+	</a>
+{% for position in company.position_set.all %}
+	<a href="{% url 'matcher:positiondetail' position.id %}" class="list-group-item">
+    	{{ position.job_title}} reporting to {{position.contact_name }} issued on {{ position.created }}
+    </a>
+
+{% endfor %}
+{% endblock %}

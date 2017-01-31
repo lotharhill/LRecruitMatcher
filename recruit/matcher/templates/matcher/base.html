@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>LR {% block title %}  {% endblock %}</title>
+{% load staticfiles %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'Matcher/style.css' %}" />
+<!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    </head>
+
+       <body>
+      <row>
+        <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary navbar-fixed-top fixed-top">
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="/matcher/">L'Matcher</a>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li>
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Record Lists
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{% url 'matcher:people_list' %}">People List</a>
+                        <a class="dropdown-item" href="{% url 'matcher:company_list' %}">Company List</a>
+                        <a class="dropdown-item" href="{% url 'matcher:position_list' %}">Position List</a>
+                        <a class="dropdown-item" href="{% url 'matcher:match_list' %}">Match List</a>
+                      </div>
+                    </div>
+                </li>
+                <li> 
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add Record
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{% url 'matcher:person_add' %}">Add a Person</a>
+                        <a class="dropdown-item" href="{% url 'matcher:company_add' %}">Add a Company</a>
+                        <a class="dropdown-item" href="{% url 'matcher:position_add' %}">Add a Position</a>
+                        <a class="dropdown-item" href="{% url 'matcher:match_add' %}">Make a Match</a>
+                        <a class="dropdown-item" href="{% url 'matcher:interview_add' %}">Add an Interview</a>
+                      </div>
+                    </div>
+                </li>
+
+            </ul>
+            
+
+          </div>
+
+            <form class="navbar-form navbar-left" role="search" method="get" action="#">
+              <div class="form-group">
+                <input type="text" class="form-control" name="query" value="search">
+              </div>
+              
+            </form>
+
+        </nav>
+        <br>
+      </row>
+      <br>
+{% block body %}
+{% endblock %}
+
+  </body>
+</html>

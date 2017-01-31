@@ -1,0 +1,22 @@
+{% extends 'matcher/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+{% block title %} Add Person {% endblock %}
+
+<div class="container-fluid bg-faded">
+    <div class="card-columns">
+					<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+						{% csrf_token %}
+						{{form|crispy}}
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-primary">SubmitPERSON</button>
+							</div>
+						</div>
+					</form>
+
+	</div>
+</div>
+
+{% endblock %}

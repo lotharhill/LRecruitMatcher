@@ -1,0 +1,121 @@
+{% extends 'matcher/base.html' %}
+{% block body %}
+{% block title %} Index Page {% endblock %}
+    <div class="container-fluid bg-faded"><br>
+        <div class="card-columns">
+         
+            <div class=""> 
+                <div class="card text-center">
+                    <div class="card-block">
+                        {% if latest_person_list %}
+                        <h4 class="card-title text-center">Recent People
+                        </h4>
+                            {% for person in latest_person_list %}
+                            <ul class="list-group text-center">
+                        
+                                    <a href="{{person.get_absolute_url}}" class="list-group-item list-group-item-action">  {{ person.first_name}} {{person.last_name }}
+                                    </a>
+                                
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>I don't see no peeps in the database.</p>
+                        {% endif %}
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class=>  
+                <div class="card text-center">
+                    <div class="card-block">
+                        {% if latest_company_list %}
+                        <h4 class="card-title text-center">Recent Companies
+                        </h4>
+                            <ul class="list-group">
+                            {% for company in latest_company_list %}
+                                
+                                    <a href="{{company.get_absolute_url}}" class="list-group-item list-group-item-action">  {{ company.company_name}}
+                                    </a>
+                            
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>I don't see no companies in the database.</p>
+                        {% endif %}
+                        <a href="/matcher/companies" class="btn btn-primary">Company List</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class=>     
+                <div class="card text-center">
+                    <div class="card-block">
+                        {% if latest_position_list %}
+                        <h4 class="card-title text-center">
+                        Recent Positions
+                        </h4>
+                            <ul class="list-group">
+                            {% for position in latest_position_list %}
+                                    <a href="{{position.get_absolute_url}}" class="list-group-item  list-group-item-action"> {{ position.job_title}} at {{ position.company.company_name }}
+                                    </a>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>I don't see no jobs in the database.</p>
+                        {% endif %}
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class=>       
+                 <div class="card text-center">
+                    <div class="card-block">
+                        {% if latest_match_list %}
+                        <h4 class="card-title text-center">
+                        Recent Matches
+                        </h4>
+                            <ul class="list-group">
+                            {% for match in latest_match_list %}
+                                
+                                    <a href="{{match.get_absolute_url}}" class="list-group-item  list-group-item-action">  {{ match.candidate}} for {{ match.position }} at {{ match.position.company }}
+                                    </a>
+                                
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>I don't see no matches in the database.</p>
+                        {% endif %}
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class=>
+                 <div class="card text-center">
+                    <div class="card-block">
+                    {% if latest_interview_list %}
+                        <h4 class="card-title text-center">
+                        Recent Interviews
+                        </h4>
+                            <ul class="list-group text-center">
+                            {% for interview in latest_interview_list %}
+                                
+                                    <a href="{{interview.get_absolute_url}}" class="card-text list-group-item  list-group-item-action"> 
+                                        {{ interview.match.candidate }} is interviewing at {{ interview.match.position.company }} on {{ interview.scheduled_time }}
+                                    </a>
+                                
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>I don't see no interviews in the database.</p>
+                        {% endif %}
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+      
+
+    </div>
+{% endblock %}

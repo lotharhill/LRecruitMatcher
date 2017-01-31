@@ -1,0 +1,35 @@
+{% extends 'matcher/base.html' %}
+
+
+{% block body %}
+{% block title %} Match List {% endblock %}
+
+<table class="table">
+<tr>
+
+    <td>name</td>
+    <td>candidate</td>
+    <td>position</td>
+
+    <td>stage_in_process</td>
+        <td>Notes</td>
+            <td>Active?</td>
+        <td>created</td>
+    <td>last_updated</td>
+</tr>
+{% for object in object_list %}
+<tr>
+
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.candidate }}</td>
+    <td>{{ object.position }}</td>
+
+    <td>{{ object.get_stage_in_process_display }}</td>
+    <td>{{ object.notes }}</td>
+    <td>{{ object.is_active }}</td>
+        <td>{{ object.created }}</td>
+    <td>{{ object.last_updated }}</td>
+</tr>
+{% endfor %}
+
+{% endblock %}

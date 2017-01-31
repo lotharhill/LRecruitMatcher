@@ -1,0 +1,25 @@
+APPARENTLY THIS WHOLE FORM DOES ABSOLUTELY NOTHING
+
+SHOULD BE DELETED
+
+
+
+
+{% for field in form %}
+<form>
+	<div class="form-group">
+		<div class="col-md-offset-1 col-sm-10">
+			<span class="text-danger small">{{ field.errors }}</span>
+		</div>
+		<ul>
+			<li>
+				<label class="control-label"> {{ field.label_tag }} </label>
+				<p>
+					<div class="input"> {{ field }} </div>
+				</p>
+				<br>
+			</li>
+		</ul>
+	</div>
+</form>
+{% endfor %}

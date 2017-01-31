@@ -1,0 +1,25 @@
+{% extends 'matcher/base.html' %}
+
+{% load humanize %}
+
+{% block body %}
+{% block title %} Interview Detail {% endblock %}
+
+
+<h1>
+{{ interview.match.candidate }} has had {{ interview.match.interview_set.count|apnumber }} 
+{% if interview.match.interview_set.count == 1 %} interview{% else %} interviews{% endif %}
+ at {{ interview.match.position.company.company_name }} for the {{ interview.match.position.job_title}} position</h1>
+
+
+
+we could have this loop through all the people who work at the company and you could select 
+multiple people who will be interviewing
+{{ interview.match.candidate }}
+{{ interview.scheduled_time|date:"SHORT_DATE_FORMAT" }} at {{ interview.scheduled_time|date:"P"}}
+
+<ul>
+{% for hm in interview.interview_with.all %}<li><a href="{% url 'matcher:persondetail' hm.id %}">{{ hm.first_name }} {{ hm.last_name}}</a>{% endfor %}</li>
+</ul>
+
+{% endblock %}

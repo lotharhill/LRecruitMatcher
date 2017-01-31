@@ -1,0 +1,44 @@
+{% extends 'matcher/base.html' %}
+
+
+{% block body %}
+{% block title %} People List {% endblock %}
+{% load humanize %}
+
+
+
+<table class="table">
+<tr>
+<td>Name </td>
+    <td>Title</td>
+    <td>Company</td>
+    <td>Salary</td>
+    <td>Phone</td>
+    <td>Email</td>
+    <td>Linkedin Profile</td>
+
+    <td>created</td>
+    <td>last_updated</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    
+    <td><a href="{{object.get_absolute_url}}"> 
+    {{ object.first_name }} 
+    {% if object.nickname %} "{{ object.nickname}}" {% endif %}
+    {{ object.middle_name }}
+    {{ object.last_name }} 
+    {% if object.suffix%} {{object.suffix}} {% endif%} 
+     </a></td>
+     <td>{{ object.title }}</td>
+     <td><a href="{{object.current_employer.get_absolute_url}}"> {{ object.current_employer.company_name }} </a></td>
+    <td>{{ object.salary }}</td>
+    <td>{{ object.phone }}</td>
+    <td>{{ object.email }}</td>
+    <td><a href="{{ object.linkedin_profile }}">{{ object.linkedin_profile }}</a></td>
+    <td>{{ object.created }}</td>
+    <td>{{ object.last_updated }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'matcher:person_add' %}">Create new Person</a>
+{% endblock %}

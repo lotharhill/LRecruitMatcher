@@ -1,0 +1,147 @@
+{% extends 'matcher/base.html' %}
+
+{% block body %}
+{% block title %} Position Detail {% endblock %}
+{% load humanize %}
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://use.fontawesome.com/738af2dac0.js"></script>
+
+<div class="container">
+<div class='row text-center'>
+    <div class="col-md-4">
+        <h2>{{	position.job_title	}} at {{ position.company.company_name }}
+        	        </h2>
+                    <a href="{% url 'matcher:position_update' position.id %}">Edit Position</a><br>
+            <span class="badge" data-toggle="tooltip" title="Matches Made to Position">
+                <span class="fa fa-newspaper-o" aria-hidden="true">{{ position.resume_count }}
+                </span>
+            </span>
+            <span class="badge" data-toggle="tooltip" title="Resumes Submitted to Client">
+                <span class="fa fa-envelope-open-o" aria-hidden="true">{{ position.get_match_count }}
+                </span>
+            </span>
+            <span class="badge" data-toggle="tooltip" title="Telephone Interviews">
+                <span class="fa fa-phone-square" aria-hidden="true">{{	position.telephone_count	}}
+                </span>
+            </span>
+            <span class="badge" data-toggle="tooltip" title="In Person Interviews">
+                <span class="fa fa-handshake-o" aria-hidden="true">{{	position.get_interview_count	}}
+                </span>
+            </span>
+
+    </div>
+
+
+
+
+    </div>
+    <div class="col-md-5">
+        <h2>
+	        <a href="{% url 'matcher:companydetail' position.company.id %}">
+			{{ position.company.company_name }}
+			</a>
+        </h2>
+            <h4>{{	position.city	}}, {{	position.zip	}}
+            </h4>
+        <h4>
+        	<a href="{% url 'matcher:persondetail' position.contact_name.id %}">
+        	{{ position.contact_name }}</a>, {{ position.contact_name.title }}</h4>
+        <p>{{ position.contact_name.phone }}
+        <!-- Will be set to send email but disabled for testing -->
+        <!--         <a ng-href="mailto:{{ position.contact_name.email  }}?Subject={{	position.job_title	}}" target="_top">  -->
+        {{ position.contact_name.email }}
+        </a>
+    </div>
+   
+    
+    <div class="col-md-3">
+        <h4>
+            <a href="http://www.century-group.com/jobs/{{ position.position_id }}/" target="_blank">
+            Job ID: {{ position.position_id }}
+            </a>
+        </h4>
+        <span>
+            <h4>
+            Rep: NEED TO ADD REP FIELD HERE
+            </h4>
+            
+        <h4>
+            Title Code: {{	position.title_code	}}
+        </h4>
+        <p>
+            Fee: {{ position.fee }}%
+        </p>
+            <p>
+                Open Since: {{ position.created }}
+            </p>
+
+        </span>
+    </div>
+</div>
+</div>
+        <div>
+            <div class="row">
+
+                <p class="col-md-10 col-md-offset-1 well">{{ position.job_description }}
+                </p>
+                <br>
+               
+            </div>
+        </div>
+</div>
+ 
+
+<div class="col-md-5 col-md-offset-1">
+    <h3>Matches made for {{ position.job_title }} at {{ position.company.company_name}}
+     </h3>
+     {% for match in position.match_set.all %}
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="card">
+            <div class="card-header" role="tab" id="{{match.id}}">
+              <h5 class="mb-0">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#{{match.candidate.first_name}}{{match.id}}" aria-expanded="false" aria-controls="{{match.candidate.first_name}}{{match.id}}">
+                            {{ match.candidate.first_name }} {{ match.candidate.last_name }}
+                            {% if match.stage_in_process %} is in the {{ match.stage_in_process }} stage
+                            and has had {{ match.interview_set.count|apnumber }} 
+                            {% if match.interview_set.count == 1 %} interview{% else %} interviews{% endif %}
+                            {% endif %}
+                </a>
+              </h5>
+            </div>
+
+        
+            <div id="{{match.candidate.first_name}}{{match.id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-block">
+                    {% for interview in match.interview_set.all %}
+                    <a href="/matcher/{{ interview.match.id }}/match" class="list-group-item  list-group-item-action"> 
+                        
+                        {{ interview.match.candidate }} interview scheduled for {{ interview.match.position.company }} on {{ interview.scheduled_time }}
+
+                    </a>
+                    {% endfor %}
+                </div>
+        
+        
+            </div>
+            
+        </div>
+    
+    {% endfor %}
+    </div> 
+</div> 
+<br><br><br>
+
+{% endblock %}
+
+
+These buttons are controls that I'm keeping for reference but will eventually remove
+<div class="col-md-4 col-md-offset-2"> 
+    <form action="#" method="post">{% csrf_token %} 
+      <input type="submit" class="btn" value="add internal submittal" name="res">
+
+      <input type="submit" class="btn" value="add telephone interview" name="tel">  
+
+    </form>
+</div>

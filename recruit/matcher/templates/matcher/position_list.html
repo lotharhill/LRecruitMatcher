@@ -1,0 +1,77 @@
+
+{% extends 'matcher/base.html' %}
+
+{% block body %}
+{% block title %} Position List {% endblock %}
+
+
+<p><a class="btn btn-default" href="{% url 'matcher:position_list' %}">Position Listing</a></p>
+<table class="table">
+<tr>
+
+    <td>job_title</td>
+
+    <td>created</td>
+    <td>last_updated</td>
+    <td>position_zip</td>
+    <td>description</td>
+    <td>position_id</td>
+    <td>title_code</td>
+    <td>city</td>
+    <td>salary_lower</td>
+    <td>salary_upper</td>
+    <td>job_description</td>
+    <td>telephone_count</td>
+    <td>in_person_count</td>
+    <td>notes</td>
+    <td>presentation_count</td>
+    <td>benefits</td>
+    <td>resume_count</td>
+    <td>offer_made_count</td>
+    <td>fee</td>
+</tr>
+{% for object in object_list %}
+<tr>
+   
+
+    <td>
+              <a href="{{ object.get_absolute_url }}" >
+                {{	object.job_title	}} at {{ object.company.company_name}}
+              </a>
+              <span class="badge">
+                <span class="glyphicon glyphicon-user">
+                  {{	object.in_person_count	}}
+                </span>
+              </span>
+
+              <span class="badge">
+                <span class="glyphicon glyphicon-earphone">
+                  {{	object.telephone_count	}}
+                </span>
+              </span>
+            </td>
+
+
+ 
+    <td>{{ object.created }}</td>
+    <td>{{ object.last_updated }}</td>
+    <td>{{ object.position_zip }}</td>
+    <td>{{ object.description }}</td>
+    <td>{{ object.position_id }}</td>
+    <td>{{ object.title_code }}</td>
+    <td>{{ object.city }}</td>
+    <td>{{ object.salary_lower }}</td>
+    <td>{{ object.salary_upper }}</td>
+    <td>{{ object.job_description }}</td>
+    <td>{{ object.telephone_count }}</td>
+    <td>{{ object.in_person_count }}</td>
+    <td>{{ object.notes }}</td>
+    <td>{{ object.presentation_count }}</td>
+    <td>{{ object.benefits }}</td>
+    <td>{{ object.resume_count }}</td>
+    <td>{{ object.offer_made_count }}</td>
+    <td>{{ object.fee }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'matcher:position_add' %}">Create new Position</a>
+{% endblock %}

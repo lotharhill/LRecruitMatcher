@@ -1,0 +1,21 @@
+{% extends 'matcher/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+{% block title %} Add Company {% endblock %}
+
+<div class="container-fluid bg-faded">
+    <div class="card-columns">
+				{% block content %}
+				
+					<form method="post">
+						{% csrf_token %}
+						{{form|crispy}}
+					<button class="btn btn-primary" type="submit">SubmitCOMPANY</button>
+				</form>
+				{% endblock %}
+
+	</div>
+</div>
+
+{% endblock %}
